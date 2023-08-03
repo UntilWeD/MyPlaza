@@ -1,4 +1,4 @@
-package com.untilwed.Plaza;
+package com.untilwed.plaza;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

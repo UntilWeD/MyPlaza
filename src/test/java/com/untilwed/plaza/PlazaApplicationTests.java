@@ -1,4 +1,4 @@
-package com.untilwed.Plaza;
+package com.untilwed.plaza;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
