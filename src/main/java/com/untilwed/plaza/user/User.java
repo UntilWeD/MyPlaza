@@ -1,11 +1,12 @@
 package com.untilwed.plaza.user;
 
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 @Getter
-@AllArgsConstructor
+@Data
 public class User {
 
     //데이터 베이스에서 번호를 붙이기 위한 넘버

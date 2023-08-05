@@ -3,10 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <title>Plaza_Register</title>
+    <link th:href="@{/css/bootstrap.css}" rel="stylesheet"/>
 </head>
 <body>
     <h1>PLAZA</h1>
+    <img th:src="@{/img/Ancient_plaza.jpg}" alt="고대 플라자 사진"/>
     <h2>회원가입</h2>
+    <form action="" th:action th:object="${user}" method="post">
+        <label for="username">Username:</label>
+        <input type="text" id="username" th:field="*{username}" required><br><br>
+
+        <label for="id">Id:</label>
+        <input type="text" id="id" th:field="*{id}" required><br><br>
+
+        <label for="password">Password:</label>
+        <input type="password" id="password" th:field="*{password}" required><br><br>
+
+        <label for="email">Email:</label>
+        <input type="text" id="email" th:field="*{email}" required><br><br>
+
+        <button type="submit">Submit</button>
+
+    </form>
+
     <a th:href="@{home}">뒤로가기</a>
 </body>
 </html>

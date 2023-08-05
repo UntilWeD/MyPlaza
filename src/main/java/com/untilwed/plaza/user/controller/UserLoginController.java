@@ -1,6 +1,7 @@
 package com.untilwed.plaza.user.controller;
 
 import com.untilwed.plaza.user.User;
+import org.springframework.ui.Model;
 
 public interface UserLoginController {
 

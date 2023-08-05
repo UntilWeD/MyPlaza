@@ -3,6 +3,7 @@ package com.untilwed.plaza.user.controller;
 import com.untilwed.plaza.user.User;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,7 +17,7 @@ public class UserLoginLoginControllerImpl implements UserLoginController {
 
     //클라이언트가 회원가입버튼을 눌렀을 시에
     @GetMapping("/register")
-    public String userRegisterhome(){
+    public String userRegisterhome(@ModelAttribute("user") User user){
         return "user/userlogin/register";
     }
 
@@ -24,10 +25,10 @@ public class UserLoginLoginControllerImpl implements UserLoginController {
     @PostMapping("/register")
     @Override
     public String userRegister(@ModelAttribute User user) {
+        log.info("Generated user = {}", user);
 
 
-
-        return "/userlogin/";
+        return "redirect:/";
     }
 
     //처음 로그인 화면
