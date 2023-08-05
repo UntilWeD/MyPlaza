@@ -17,7 +17,7 @@ public class UserLoginLoginControllerImpl implements UserLoginController {
     //클라이언트가 회원가입버튼을 눌렀을 시에
     @GetMapping("/register")
     public String userRegisterhome(){
-        return "/userlogin/register";
+        return "user/userlogin/register";
     }
 
     //클라이언트가 회원정보를 기입하고 가입완료버튼을 눌렀을 시에
@@ -26,11 +26,12 @@ public class UserLoginLoginControllerImpl implements UserLoginController {
     public String userRegister(@ModelAttribute User user) {
 
 
+
         return "/userlogin/";
     }
 
     //처음 로그인 화면
-    @GetMapping("/")
+    @GetMapping("/home")
     public String userLoginHome(){
         log.info("userLoginHome 메서드 실행");
         return "user/userlogin/home";
