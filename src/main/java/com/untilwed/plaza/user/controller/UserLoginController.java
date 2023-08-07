@@ -5,7 +5,7 @@ import org.springframework.ui.Model;
 
 public interface UserLoginController {
 
-    public String userRegister(User user);
+    public String userRegister(User user, Model model);
     public String userLogin(User user);
     public String userLogout(User user);
 
