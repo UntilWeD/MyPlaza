@@ -1,5 +1,6 @@
 package com.untilwed.plaza.user.controller;
 
+import com.untilwed.plaza.user.LoginForm;
 import com.untilwed.plaza.user.User;
 import com.untilwed.plaza.user.service.UserServiceImpl;
 import lombok.RequiredArgsConstructor;
@@ -37,21 +38,27 @@ public class UserLoginControllerImpl implements UserLoginController {
         model.addAttribute("user", savedUser);
 
 
-        return "redirect:/";
+        return "redirect:/userlogin/home";
     }
 
     //처음 로그인 화면
     @GetMapping("/home")
-    public String userLoginHome(){
-        log.info("userLoginHome 메서드 실행");
+    public String userLoginHome(@ModelAttribute("user") User user){
         return "user/userlogin/home";
     }
 
     //TODO
+    //후에
     //암호화된쿠키와 세션을 사용하여 로그인기능을 만든다.
     @Override
-    public String userLogin(User user) {
-        return null;
+    @PostMapping("/home")
+    public String userLogin(@ModelAttribute LoginForm loginForm, Model model) {
+        log.info("로그인 컨트롤러 메서드 실행 loginForm : {}", loginForm);
+
+        User loggedinUser = userService.login(loginForm);
+        model.addAttribute("user", loggedinUser);
+
+        return "redirect:/";
     }
 
     //TODO

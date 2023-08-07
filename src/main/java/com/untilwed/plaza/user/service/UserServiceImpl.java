@@ -1,5 +1,6 @@
 package com.untilwed.plaza.user.service;
 
+import com.untilwed.plaza.user.LoginForm;
 import com.untilwed.plaza.user.User;
 import com.untilwed.plaza.user.repository.UserRepositoryImpl;
 import lombok.RequiredArgsConstructor;
@@ -27,8 +28,25 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User login(User user) {
-        return null;
+    public User login(LoginForm loginForm) {
+        Optional<User> loginUser = userRepository.findByIdUser(loginForm.getId());
+
+        //TODO
+        //Spring에서 배운거 써먹기 (validator, error) 사용하기
+        if(loginUser == null){
+            log.info("해당 데이터 베이스에 없는 사용자 id입니다. ");
+            throw new RuntimeException();
+        }
+
+        log.info("loginUser : {}", loginUser);
+
+        if(loginUser.get().getPassword().equals(loginForm.getPassword())){
+            log.info("로그인에 성공하셧습니다.");
+            return loginUser.get();
+        } else {
+          log.info("로그인에 실패하셨습니다. 아이디나 비밀번호를 다시 확인해주세요.");
+          return null;
+        }
     }
 
     @Override

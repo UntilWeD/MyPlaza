@@ -10,7 +10,7 @@ public interface UserRepository {
     public User saveUser(User user);
 
     public Optional<User> findUser(User user);
-    public Optional<User> findByIdUser(User user);
+    public Optional<User> findByIdUser(String id);
     public List<User> findAllUser();
 
     public Optional<User> deleteUser(User user);

@@ -4,6 +4,7 @@ import com.untilwed.plaza.user.User;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.jdbc.JdbcTemplateAutoConfiguration;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -42,8 +43,18 @@ public class UserRepositoryImpl implements UserRepository{
     }
 
     @Override
-    public Optional<User> findByIdUser(User user) {
-        return Optional.empty();
+    public Optional<User> findByIdUser(String id) {
+
+        String sql = "SELECT * FROM user WHERE id = ?";
+        Optional<User> findUser = null;
+
+        try{
+            findUser = Optional.of(jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<>(User.class), id));
+        } catch (Exception ex){
+            log.info("findUser를 찾는 도중 오류가 발생하였습니다.");
+        }
+
+        return findUser;
     }
 
     @Override
