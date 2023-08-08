@@ -3,6 +3,9 @@ package com.untilwed.plaza.user.controller;
 import com.untilwed.plaza.user.LoginForm;
 import com.untilwed.plaza.user.User;
 import com.untilwed.plaza.user.service.UserServiceImpl;
+import com.untilwed.plaza.web.SessionConst;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -48,15 +51,19 @@ public class UserLoginControllerImpl implements UserLoginController {
     }
 
     //TODO
-    //후에
     //암호화된쿠키와 세션을 사용하여 로그인기능을 만든다.
     @Override
     @PostMapping("/home")
-    public String userLogin(@ModelAttribute LoginForm loginForm, Model model) {
+    public String userLogin(@ModelAttribute LoginForm loginForm, Model model, HttpServletRequest request) {
         log.info("로그인 컨트롤러 메서드 실행 loginForm : {}", loginForm);
 
-        User loggedinUser = userService.login(loginForm);
-        model.addAttribute("user", loggedinUser);
+        User loginUser = userService.login(loginForm);
+
+        //로그인 성공처리
+        //세션이 있으면 있는 세션 반환, 없으면 신규세션을 생성
+        HttpSession session = request.getSession();
+        // 세션에 로그인 정보 보관
+        session.setAttribute(SessionConst.LOGIN_USER, loginUser);
 
         return "redirect:/";
     }
@@ -64,7 +71,13 @@ public class UserLoginControllerImpl implements UserLoginController {
     //TODO
     //쿠키와 세션을 사용하여 로그아웃기능을 만든다.
     @Override
-    public String userLogout(User user) {
-        return null;
+    public String userLogout(HttpServletRequest request) {
+        HttpSession session = request.getSession(false);
+        if(session != null){
+            // 세션 삭제
+            session.invalidate();
+        }
+
+        return "redirect:/";
     }
 }
