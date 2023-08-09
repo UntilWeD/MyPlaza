@@ -47,6 +47,7 @@ public class UserLoginControllerImpl implements UserLoginController {
     //처음 로그인 화면
     @GetMapping("/home")
     public String userLoginHome(@ModelAttribute("user") User user){
+        log.info("로그인 홈 메서드 실행");
         return "user/userlogin/home";
     }
 
@@ -71,6 +72,7 @@ public class UserLoginControllerImpl implements UserLoginController {
     //TODO
     //쿠키와 세션을 사용하여 로그아웃기능을 만든다.
     @Override
+    @PostMapping ("/logout")
     public String userLogout(HttpServletRequest request) {
         HttpSession session = request.getSession(false);
         if(session != null){

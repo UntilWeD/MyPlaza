@@ -3,14 +3,20 @@
       xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <link th:href="@{/css/bootstrap.min.css}"
-          href="../css/bootstrap.min.css" rel="stylesheet">
+    <link th:href="@{/css/bootstrap.css}" rel="stylesheet">
     <title>Index</title>
 </head>
 
 <body>
     <h1>Welcome To PLAZA!</h1>
-
+    <img th:src="@{/img/Ancient_plaza.jpg}" alt="고대 플라자 사진"/>
+    <div class="col">
+        <form th:action="@{/userlogin/home}" method="get">
+            <button class="w-100 btn btn-dark btn-lg" type="submit">
+                로그인
+            </button>
+        </form>
+    </div> </div>
 
 </body>
 </html>
