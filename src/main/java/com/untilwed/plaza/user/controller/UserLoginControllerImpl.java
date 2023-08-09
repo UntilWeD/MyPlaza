@@ -10,6 +10,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -33,8 +36,23 @@ public class UserLoginControllerImpl implements UserLoginController {
     //클라이언트가 회원정보를 기입하고 가입완료버튼을 눌렀을 시에
     @PostMapping("/register")
     @Override
-    public String userRegister(@ModelAttribute User user, Model model) {
+    public String userRegister(@ModelAttribute User user, BindingResult bindingResult, Model model) {
         log.info("Generated user = {}", user);
+
+        //검증로직
+        if(user.getUsername().length() > 10 || user.getUsername().length() <= 0){
+            bindingResult.addError(new FieldError("user", "username", user.getUsername() ,false, null, null, "유저이름은 0보다 크고 10보다 작아야합니다."));
+        }
+
+        if(user.getUsername() == "" || user.getId() == "" || user.getPassword() == "" ||
+            user.getEmail() == "" ){
+            bindingResult.addError(new ObjectError("user", null, null, "비어 있는 칸이 있습니다."));
+        }
+
+        if(bindingResult.hasErrors()){
+            log.info("회원가입 중 오류가 발생하여 다시 되돌아갑니다 : {}", bindingResult);
+            return "user/userlogin/register";
+        }
 
         User savedUser = userService.register(user);
 
@@ -59,6 +77,9 @@ public class UserLoginControllerImpl implements UserLoginController {
         log.info("로그인 컨트롤러 메서드 실행 loginForm : {}", loginForm);
 
         User loginUser = userService.login(loginForm);
+
+        //검증 오류 결과 보관
+
 
         //로그인 성공처리
         //세션이 있으면 있는 세션 반환, 없으면 신규세션을 생성
