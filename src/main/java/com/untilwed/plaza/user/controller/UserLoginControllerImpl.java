@@ -44,8 +44,18 @@ public class UserLoginControllerImpl implements UserLoginController {
             bindingResult.addError(new FieldError("user", "username", user.getUsername() ,false, null, null, "유저이름은 0보다 크고 10보다 작아야합니다."));
         }
 
+        //id
+        if(user.getId().length() >= 10 || user.getId().length() <= 1){
+            bindingResult.addError(new FieldError("user", "id", user.getId(), false, new String[]{"length.user.username"}, new Object[]{10}, null));
+        }
+
+        //pasword
+        if(user.getPassword().length() > 20 || user.getPassword().length()  < 6){
+            bindingResult.rejectValue("password", "length");
+        }
+
         if(user.getUsername() == "" || user.getId() == "" || user.getPassword() == "" ||
-            user.getEmail() == "" ){
+                user.getEmail() == "" ){
             bindingResult.addError(new ObjectError("user", null, null, "비어 있는 칸이 있습니다."));
         }
 
