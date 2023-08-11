@@ -5,7 +5,6 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
-@Getter
 @Data
 public class User {
 

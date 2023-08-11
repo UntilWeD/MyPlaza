@@ -3,6 +3,7 @@ package com.untilwed.plaza.user.controller;
 import com.untilwed.plaza.user.LoginForm;
 import com.untilwed.plaza.user.User;
 import com.untilwed.plaza.user.service.UserServiceImpl;
+import com.untilwed.plaza.user.validation.UserValidator;
 import com.untilwed.plaza.web.SessionConst;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -13,10 +14,9 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.*;
 
 @Slf4j
 @RequestMapping("/userlogin")
@@ -24,6 +24,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequiredArgsConstructor
 public class UserLoginControllerImpl implements UserLoginController {
     private final UserServiceImpl userService;
+    private final UserValidator userValidator;
+
+    //해당 컨트롤러에만 영향
+    @InitBinder
+    public void init(WebDataBinder dataBinder){
+        dataBinder.addValidators(userValidator);
+    }
 
 
 
@@ -36,28 +43,30 @@ public class UserLoginControllerImpl implements UserLoginController {
     //클라이언트가 회원정보를 기입하고 가입완료버튼을 눌렀을 시에
     @PostMapping("/register")
     @Override
-    public String userRegister(@ModelAttribute User user, BindingResult bindingResult, Model model) {
+    public String userRegister(@Validated @ModelAttribute User user, BindingResult bindingResult, Model model) {
         log.info("Generated user = {}", user);
 
-        //검증로직
-        if(user.getUsername().length() > 10 || user.getUsername().length() <= 0){
-            bindingResult.addError(new FieldError("user", "username", user.getUsername() ,false, null, null, "유저이름은 0보다 크고 10보다 작아야합니다."));
-        }
+//        //검증로직
+//        if(user.getUsername().length() > 10 || user.getUsername().length() <= 0){
+//            bindingResult.addError(new FieldError("user", "username", user.getUsername() ,false, null, null, "유저이름은 0보다 크고 10보다 작아야합니다."));
+//        }
+//
+//        //id
+//        if(user.getId().length() >= 10 || user.getId().length() <= 1){
+//            bindingResult.addError(new FieldError("user", "id", user.getId(), false, new String[]{"length.user.username"}, new Object[]{10}, null));
+//        }
+//
+//        //pasword
+//        if(user.getPassword().length() > 20 || user.getPassword().length()  < 6){
+//            bindingResult.rejectValue("password", "length");
+//        }
+//
+//        if(user.getUsername() == "" || user.getId() == "" || user.getPassword() == "" ||
+//                user.getEmail() == "" ){
+//            bindingResult.addError(new ObjectError("user", null, null, "비어 있는 칸이 있습니다."));
+//        }
 
-        //id
-        if(user.getId().length() >= 10 || user.getId().length() <= 1){
-            bindingResult.addError(new FieldError("user", "id", user.getId(), false, new String[]{"length.user.username"}, new Object[]{10}, null));
-        }
-
-        //pasword
-        if(user.getPassword().length() > 20 || user.getPassword().length()  < 6){
-            bindingResult.rejectValue("password", "length");
-        }
-
-        if(user.getUsername() == "" || user.getId() == "" || user.getPassword() == "" ||
-                user.getEmail() == "" ){
-            bindingResult.addError(new ObjectError("user", null, null, "비어 있는 칸이 있습니다."));
-        }
+        userValidator.validate(user, bindingResult);
 
         if(bindingResult.hasErrors()){
             log.info("회원가입 중 오류가 발생하여 다시 되돌아갑니다 : {}", bindingResult);
