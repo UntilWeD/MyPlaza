@@ -26,11 +26,11 @@ public class UserLoginControllerImpl implements UserLoginController {
     private final UserServiceImpl userService;
     private final UserValidator userValidator;
 
-    //해당 컨트롤러에만 영향
-    @InitBinder
-    public void init(WebDataBinder dataBinder){
-        dataBinder.addValidators(userValidator);
-    }
+//    //해당 컨트롤러에만 영향
+//    @InitBinder
+//    public void init(WebDataBinder dataBinder){
+//        dataBinder.addValidators(userValidator);
+//    }
 
 
 

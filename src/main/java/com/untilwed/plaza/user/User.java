@@ -1,5 +1,6 @@
 package com.untilwed.plaza.user;
 
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
@@ -12,10 +13,13 @@ public class User {
     private long number;
 
     //가입하기위한 최소한의 정보
+    @NotBlank
     private String id;
+    @NotBlank
     private String password;
+    @NotBlank
     private String email;
-
+    @NotBlank
     private String username;
 
 
