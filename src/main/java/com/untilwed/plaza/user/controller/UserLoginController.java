@@ -9,7 +9,7 @@ import org.springframework.validation.BindingResult;
 public interface UserLoginController {
 
     public String userRegister(User user, BindingResult bindingResult, Model model);
-    public String userLogin(LoginForm loginForm, Model model, HttpServletRequest request);
+    public String userLogin(LoginForm loginForm, BindingResult bindingResult,Model model, HttpServletRequest request);
     public String userLogout(HttpServletRequest request);
 
 

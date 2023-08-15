@@ -35,7 +35,7 @@ public class UserServiceImpl implements UserService {
         //Spring에서 배운거 써먹기 (validator, error) 사용하기
         if(loginUser == null){
             log.info("해당 데이터 베이스에 없는 사용자 id입니다. ");
-            throw new RuntimeException();
+            return null;
         }
 
         log.info("loginUser : {}", loginUser);
