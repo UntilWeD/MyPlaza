@@ -1,10 +1,8 @@
 package com.untilwed.plaza.user;
 
 import jakarta.validation.constraints.NotBlank;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
+
 
 @Data
 public class User {
@@ -21,6 +19,8 @@ public class User {
     private String email;
     @NotBlank
     private String username;
+
+    boolean emailVerified = false;
 
 
 }

@@ -10,4 +10,6 @@ public interface UserService {
     public User register(User user);
     public User login(LoginForm loginForm);
     public void logout(User user);
+
+    public Optional<User> setEmailVerify(Long userNumber);
 }

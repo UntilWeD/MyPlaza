@@ -66,4 +66,12 @@ public class UserRepositoryImpl implements UserRepository{
     public Optional<User> deleteUser(User user) {
         return Optional.empty();
     }
+
+    //TODO: 유저의 이메일인증정보 TRUE로 설정해놓기
+    @Override
+    public Optional<User> setEmailVerifiedByNumber(Long userNumber) {
+
+
+        return Optional.empty();
+    }
 }

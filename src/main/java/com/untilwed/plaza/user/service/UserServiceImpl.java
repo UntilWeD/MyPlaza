@@ -53,4 +53,10 @@ public class UserServiceImpl implements UserService {
     public void logout(User user) {
 
     }
+
+    @Override
+    public Optional<User> setEmailVerify(Long userNumber) {
+
+        return Optional.empty();
+    }
 }
