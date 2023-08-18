@@ -16,11 +16,10 @@ import org.springframework.web.bind.annotation.RestController;
 @Validated
 @RequiredArgsConstructor
 @RestController
-@RequestMapping
+@RequestMapping("/user")
 public class EmailController {
 
     private final EmailService emailService;
-    private final UserServiceImpl userService;
 
     //사용자가 이메일을 받고서 내용의 이미지를 클릭했을때
     @GetMapping("/confirm-email")
@@ -29,7 +28,7 @@ public class EmailController {
             //이메일 인증 로직을 실행합니다.
 
             boolean result = emailService.verifyEmail(token);
-
+            log.info("result = {}", result);
 
 
             return new ResponseEntity(HttpStatus.OK);

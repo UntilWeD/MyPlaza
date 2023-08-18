@@ -60,6 +60,7 @@ public class UserServiceImpl implements UserService {
         Optional<User> findUser = userRepository.setEmailVerifiedByNumber(userNumber);
 
         if(findUser.isEmpty()){
+            log.info("해당 유저는 존재하지 않습니다.");
             return null;
         }
         return findUser;

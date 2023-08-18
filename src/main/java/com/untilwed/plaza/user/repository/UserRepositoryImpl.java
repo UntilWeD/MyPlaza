@@ -67,10 +67,15 @@ public class UserRepositoryImpl implements UserRepository{
         return Optional.empty();
     }
 
-    //TODO: 유저의 이메일인증정보 TRUE로 설정해놓기
+    //이메일 성공 로직
     @Override
     public Optional<User> setEmailVerifiedByNumber(Long number) {
-        String sql = "SELECT * FROM user WHERE number = ?";
+        String sql = "UPDATE user SET emailVerified = true WHERE number ? AND emailVerified = false";
+        jdbcTemplate.update(sql, number);
+
+        log.info("값을 변경하였습니다.");
+
+        sql = "SELECT * FROM user WHERE number = ?";
         Optional<User> findUser = null;
 
         try{
