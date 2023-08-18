@@ -69,9 +69,16 @@ public class UserRepositoryImpl implements UserRepository{
 
     //TODO: 유저의 이메일인증정보 TRUE로 설정해놓기
     @Override
-    public Optional<User> setEmailVerifiedByNumber(Long userNumber) {
+    public Optional<User> setEmailVerifiedByNumber(Long number) {
+        String sql = "SELECT * FROM user WHERE number = ?";
+        Optional<User> findUser = null;
 
-
-        return Optional.empty();
+        try{
+            findUser = Optional.of(jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<>(User.class), number));
+            return findUser;
+        } catch (Exception e){
+            log.info("findUser를 찾는 도중 오류가 발생하였습니다.");
+            return Optional.empty();
+        }
     }
 }

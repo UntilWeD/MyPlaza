@@ -56,7 +56,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Optional<User> setEmailVerify(Long userNumber) {
+        log.info("UserServiceImpl의 setEmailVerify메서드를 실행하겠습니다.");
+        Optional<User> findUser = userRepository.setEmailVerifiedByNumber(userNumber);
 
-        return Optional.empty();
+        if(findUser.isEmpty()){
+            return null;
+        }
+        return findUser;
     }
 }
