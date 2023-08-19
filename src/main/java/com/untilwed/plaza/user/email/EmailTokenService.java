@@ -20,6 +20,7 @@ public class EmailTokenService {
 
     //이메일 인증 토큰 생성
     public String createEmailToken(Long number, String receiverEmail){
+        log.info("[이메일토큰서비스] 이메일토큰을 생성합니다.");
 
         Assert.notNull(number, "memberId는 필수적입니다.");
         Assert.notNull(receiverEmail, "recevierEmail은 필수적입니다.");
@@ -32,7 +33,7 @@ public class EmailTokenService {
         SimpleMailMessage mailMessage = new SimpleMailMessage();
         mailMessage.setTo(receiverEmail);
         mailMessage.setSubject("회원가입 이메일 인증");
-        mailMessage.setText("\"http://localhost:8000/confirm-email?token=\"+emailToken.getId()");
+        mailMessage.setText("http://localhost:8000/user/confirm-email?token="+emailToken.getId());
         emailSenderService.sendEmail(mailMessage);
 
         return emailToken.getId();

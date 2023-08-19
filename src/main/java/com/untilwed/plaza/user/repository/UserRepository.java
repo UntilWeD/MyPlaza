@@ -16,4 +16,6 @@ public interface UserRepository {
     public Optional<User> deleteUser(User user);
 
     public Optional<User> setEmailVerifiedByNumber(Long userNumber);
+
+    public long findNumberByEmail(String email);
 }

@@ -20,12 +20,14 @@ import org.springframework.web.bind.annotation.RestController;
 public class EmailController {
 
     private final EmailService emailService;
+    private final UserServiceImpl userService;
 
     //사용자가 이메일을 받고서 내용의 이미지를 클릭했을때
     @GetMapping("/confirm-email")
     public ResponseEntity viewConfirmEmail(@Valid @RequestParam String token){
         try{
             //이메일 인증 로직을 실행합니다.
+            log.info("token = {}", token);
 
             boolean result = emailService.verifyEmail(token);
             log.info("result = {}", result);

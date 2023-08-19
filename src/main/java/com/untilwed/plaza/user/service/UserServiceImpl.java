@@ -2,6 +2,7 @@ package com.untilwed.plaza.user.service;
 
 import com.untilwed.plaza.user.LoginForm;
 import com.untilwed.plaza.user.User;
+import com.untilwed.plaza.user.email.EmailTokenService;
 import com.untilwed.plaza.user.repository.UserRepositoryImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -16,6 +17,7 @@ public class UserServiceImpl implements UserService {
 
 
     private final UserRepositoryImpl userRepository;
+    private final EmailTokenService emailTokenService;
 
     private long userNumber = 0;
 
@@ -23,7 +25,13 @@ public class UserServiceImpl implements UserService {
     public User register(User user) {
         log.info("serviceUser = {}", user);
 
+        log.info("[유저서비스]이메일을 전송하였습니다.");
+
         User savedUser = userRepository.saveUser(user);
+
+        emailTokenService.createEmailToken(userRepository.findNumberByEmail(user.getEmail()), user.getEmail());
+
+
         return savedUser;
     }
 
@@ -34,7 +42,7 @@ public class UserServiceImpl implements UserService {
         //TODO
         //Spring에서 배운거 써먹기 (validator, error) 사용하기
         if(loginUser == null){
-            log.info("해당 데이터 베이스에 없는 사용자 id입니다. ");
+            log.info("[유저서비스]해당 데이터 베이스에 없는 사용자 id입니다. ");
             return null;
         }
 
@@ -42,7 +50,7 @@ public class UserServiceImpl implements UserService {
 
         if(loginUser.get().getPassword().equals(loginForm.getPassword())){
             if(loginUser.get().isEmailverified()){
-                log.info("로그인에 성공하셧습니다.");
+                log.info("[유저서비스]로그인에 성공하셧습니다.");
                 return loginUser.get();
             }else {
                 log.info("[유저서비스]이메일인증이 완료되지 않은 사용자입니다.");
@@ -66,7 +74,7 @@ public class UserServiceImpl implements UserService {
         Optional<User> findUser = userRepository.setEmailVerifiedByNumber(userNumber);
 
         if(findUser.isEmpty()){
-            log.info("해당 유저는 존재하지 않습니다.");
+            log.info("[유저서비스]해당 유저는 존재하지 않습니다.");
             return null;
         }
         return findUser;

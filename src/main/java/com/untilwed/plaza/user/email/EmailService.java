@@ -21,6 +21,7 @@ public class EmailService {
 
     @Transactional
     public boolean verifyEmail(String token) throws RuntimeException{
+        log.info("[이메일서비스 실행] verifyEmail메서드가 실행됩니다.");
 
         //이메일 토큰을 찾아온다
         EmailToken findEmailToken = emailTokenService.findByIdAndExpirationDateAfterAndExpired(token);

@@ -70,7 +70,9 @@ public class UserRepositoryImpl implements UserRepository{
     //이메일 성공 로직
     @Override
     public Optional<User> setEmailVerifiedByNumber(Long number) {
-        String sql = "UPDATE user SET emailVerified = true WHERE number ? AND emailVerified = false";
+        log.info("[유저리포지토리] setEmailVerifiedByNumber메서드를 실행하겠습니다. number : {}", number);
+
+        String sql = "UPDATE user SET emailVerified = true WHERE number = ? AND emailVerified = false";
         jdbcTemplate.update(sql, number);
 
         log.info("값을 변경하였습니다.");
@@ -85,5 +87,14 @@ public class UserRepositoryImpl implements UserRepository{
             log.info("findUser를 찾는 도중 오류가 발생하였습니다.");
             return Optional.empty();
         }
+    }
+
+    @Override
+    public long findNumberByEmail(String email) {
+        log.info("[유저리포지토리]findNumberByEmail메서드를 실행하였습니다. ");
+        String sql = "SELECT number FROM user WHERE email = ?";
+        Long userNumber = jdbcTemplate.queryForObject(sql, Long.class, email);
+
+        return userNumber;
     }
 }
