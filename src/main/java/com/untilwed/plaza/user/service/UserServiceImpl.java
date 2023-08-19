@@ -41,8 +41,14 @@ public class UserServiceImpl implements UserService {
         log.info("loginUser : {}", loginUser);
 
         if(loginUser.get().getPassword().equals(loginForm.getPassword())){
-            log.info("로그인에 성공하셧습니다.");
-            return loginUser.get();
+            if(loginUser.get().isEmailverified()){
+                log.info("로그인에 성공하셧습니다.");
+                return loginUser.get();
+            }else {
+                log.info("[유저서비스]이메일인증이 완료되지 않은 사용자입니다.");
+                return loginUser.get();
+            }
+
         } else {
           log.info("로그인에 실패하셨습니다. 아이디나 비밀번호를 다시 확인해주세요.");
           return null;

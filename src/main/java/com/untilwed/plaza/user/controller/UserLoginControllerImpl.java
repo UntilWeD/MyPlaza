@@ -46,8 +46,7 @@ public class UserLoginControllerImpl implements UserLoginController {
 
         model.addAttribute("user", savedUser);
 
-
-        return "redirect:/userlogin/loginhome";
+        return "/user/userlogin/email-confirm";
     }
 
     //처음 로그인 화면
@@ -64,10 +63,16 @@ public class UserLoginControllerImpl implements UserLoginController {
 
         User loginUser = userService.login(loginForm);
 
+
         if(loginUser == null){
             log.info("로그인 중 오류가 발생하여 다시 되돌아갑니다 : {}", bindingResult);
 
             bindingResult.reject("loginError");
+            return "user/userlogin/loginhome";
+        } else if(!(loginUser.isEmailverified())){
+
+            log.info("이메일인증이 완료되지 않은 사용자입니다.");
+            bindingResult.reject("emailNotVerified");
             return "user/userlogin/loginhome";
         }
 

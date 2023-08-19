@@ -29,7 +29,6 @@ public class EmailService {
         Long userNumber = findEmailToken.getUserNumber();
         Optional<User> findUser = userService.setEmailVerify(userNumber);
 
-        // TODO: 여기서부터는 이메일 성공 인증 로직을 구현한다.
         // 지금 예시는 유저의 인증내용 변경하는 방법입니다.
         findEmailToken.setTokenToUsed(); // 사용완료
 

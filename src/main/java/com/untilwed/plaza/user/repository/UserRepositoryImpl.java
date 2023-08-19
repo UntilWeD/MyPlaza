@@ -27,9 +27,9 @@ public class UserRepositoryImpl implements UserRepository{
     public User saveUser(User user) {
         log.info("savedUser = {}", user);
 
-        String sql = "INSERT INTO user(number, id, password, email, username) VALUES(?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO user(number, id, password, email, username, emailverified) VALUES(?, ?, ?, ?, ?, ?)";
         jdbcTemplate.update(sql,
-                user.getNumber(), user.getId(), user.getPassword(), user.getEmail(), user.getUsername());
+                user.getNumber(), user.getId(), user.getPassword(), user.getEmail(), user.getUsername(), user.isEmailverified());
 
         log.info("해당 user의 정보를 mysql 데이터베이스 저장하였습니다 :  {}", user);
 

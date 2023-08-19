@@ -20,7 +20,7 @@ public class User {
     @NotBlank
     private String username;
 
-    boolean emailVerified = false;
+    private boolean emailverified = false;
 
 
 }
