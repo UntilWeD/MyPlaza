@@ -1,10 +1,22 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en"
+      xmlns:th="http://thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>find-id</title>
 </head>
 <body>
+    <h1>아이디 찾기</h1>
+    <p>계정의 아이디를 찾기위해 이메일을 입력해주세요</p>
+    <form   th:action="@{/userlogin/find-id}" method="post">
 
+        <label for="email">Email :
+            <input type="text" id="email" name="email">
+        </label>
+
+        <button type="submit">전송하기</button>
+
+    </form>
+    <a th:href="@{/}">홈으로 가기</a>
 </body>
 </html>

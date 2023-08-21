@@ -111,7 +111,7 @@ public class UserLoginControllerImpl implements UserLoginController {
 
     //아이디찾기
     @PostMapping("/find-id")
-    public String findIdByEmail(@RequestParam String email, Model model){
+    public String findIdByEmail(@RequestParam("email") String email, Model model){
         log.info("[로그인컨트롤러] 사용자로 부터 받아온 email입니다. email: {}", email);
         userService.findUserIdByEmail(email);
 
