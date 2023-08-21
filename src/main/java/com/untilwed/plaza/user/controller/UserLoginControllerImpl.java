@@ -9,6 +9,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -101,6 +102,24 @@ public class UserLoginControllerImpl implements UserLoginController {
 
         return "redirect:/";
     }
+
+    //아이디찾기
+    @GetMapping("/find-id")
+    public String findIdByEmailHome(){
+        return "/user/userlogin/find-id";
+    }
+
+    //아이디찾기
+    @PostMapping("/find-id")
+    public String findIdByEmail(@RequestParam String email, Model model){
+        log.info("[로그인컨트롤러] 사용자로 부터 받아온 email입니다. email: {}", email);
+        userService.findUserIdByEmail(email);
+
+        model.addAttribute("email", email);
+        return "/user/userlogin/find-id-finished";
+    }
+
+    //비밀번호찾기
 
 }
 

@@ -31,7 +31,7 @@ public class UserRepositoryImpl implements UserRepository{
         jdbcTemplate.update(sql,
                 user.getNumber(), user.getId(), user.getPassword(), user.getEmail(), user.getUsername(), user.isEmailverified());
 
-        log.info("해당 user의 정보를 mysql 데이터베이스 저장하였습니다 :  {}", user);
+        log.info("[유저리포지토리] 해당 user의 정보를 mysql 데이터베이스 저장하였습니다 :  {}", user);
 
 
         return user;
@@ -51,7 +51,7 @@ public class UserRepositoryImpl implements UserRepository{
         try{
             findUser = Optional.of(jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<>(User.class), id));
         } catch (Exception ex){
-            log.info("findUser를 찾는 도중 오류가 발생하였습니다.");
+            log.info("[유저리포지토리] findUser를 찾는 도중 오류가 발생하였습니다.");
         }
 
         return findUser;
@@ -84,7 +84,7 @@ public class UserRepositoryImpl implements UserRepository{
             findUser = Optional.of(jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<>(User.class), number));
             return findUser;
         } catch (Exception e){
-            log.info("findUser를 찾는 도중 오류가 발생하였습니다.");
+            log.info("[유저리포지토리] findUser를 찾는 도중 오류가 발생하였습니다.");
             return Optional.empty();
         }
     }
@@ -93,8 +93,24 @@ public class UserRepositoryImpl implements UserRepository{
     public long findNumberByEmail(String email) {
         log.info("[유저리포지토리]findNumberByEmail메서드를 실행하였습니다. ");
         String sql = "SELECT number FROM user WHERE email = ?";
-        Long userNumber = jdbcTemplate.queryForObject(sql, Long.class, email);
+        Long userNumber = jdbcTemplate. queryForObject(sql, Long.class, email);
 
         return userNumber;
+    }
+
+    @Override
+    public Optional<User> findUserByEmail(String email) {
+        String sql = "SELECT * FROM user WHERE email = ?";
+
+        Optional<User> findUser = null;
+
+        try{
+            findUser = Optional.of(jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<>(User.class), email));
+            return findUser;
+        } catch (Exception ex){
+            log.info("[유저리포지토리] findUser를 찾는 도중 오류가 발생하였습니다.");
+        }
+
+        return Optional.empty();
     }
 }

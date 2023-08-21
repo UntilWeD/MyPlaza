@@ -79,4 +79,14 @@ public class UserServiceImpl implements UserService {
         }
         return findUser;
     }
+
+    @Override
+    public String findUserIdByEmail(String email) {
+        log.info("[유저서비스]findUserIdByEmail 메서드를 실행중입니다.");
+
+        //유저 리포지토리 필요
+        User findUser = userRepository.findUserByEmail(email).get();
+
+        return findUser.getId();
+    }
 }
