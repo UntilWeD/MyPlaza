@@ -1,5 +1,6 @@
 package com.untilwed.plaza.user.email;
 
+import com.untilwed.plaza.user.repository.UserRepositoryImpl;
 import jakarta.validation.constraints.Email;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -17,6 +18,7 @@ public class EmailTokenService {
 
     private final EmailSenderService emailSenderService;
     private final EmailTokenRepository emailTokenRepository;
+    private final UserRepositoryImpl userRepository;
 
     //이메일 인증 토큰 생성
     public String createEmailToken(Long number, String receiverEmail){
@@ -33,7 +35,11 @@ public class EmailTokenService {
         SimpleMailMessage mailMessage = new SimpleMailMessage();
         mailMessage.setTo(receiverEmail);
         mailMessage.setSubject("회원가입 이메일 인증");
-        mailMessage.setText("http://localhost:8000/user/confirm-email?token="+emailToken.getId());
+        mailMessage.setText("" +
+                "아래에 링크를 클릭해주셔서 이메일인증을 마무리 해주세요."+
+                "<br/>" +
+                "http://localhost:8000/userlogin/confirm-email?token="+emailToken.getId() +
+                "<br/>");
         emailSenderService.sendEmail(mailMessage);
 
         return emailToken.getId();
@@ -45,5 +51,11 @@ public class EmailTokenService {
                 .findByIdAndExpirationDateAfterAndExpired(emailTokenId, LocalDateTime.now(), false);
 
         return emailToken.orElseThrow(() -> new RuntimeException());
+    }
+
+    public void resendEmailToken(String email){
+        Long userNumber = userRepository.findNumberByEmail(email);
+        createEmailToken(userNumber, email);
+        log.info("재전송 완료 userNumber = {}, email = {} ", userNumber, email);
     }
 }
