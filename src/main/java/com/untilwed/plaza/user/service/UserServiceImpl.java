@@ -2,10 +2,13 @@ package com.untilwed.plaza.user.service;
 
 import com.untilwed.plaza.user.LoginForm;
 import com.untilwed.plaza.user.User;
+import com.untilwed.plaza.user.email.EmailSenderService;
+import com.untilwed.plaza.user.email.EmailService;
 import com.untilwed.plaza.user.email.EmailTokenService;
 import com.untilwed.plaza.user.repository.UserRepositoryImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -18,6 +21,7 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepositoryImpl userRepository;
     private final EmailTokenService emailTokenService;
+    private final EmailSenderService emailSenderService;
 
     private long userNumber = 0;
 
@@ -28,6 +32,7 @@ public class UserServiceImpl implements UserService {
         log.info("[유저서비스]이메일을 전송하였습니다.");
 
         User savedUser = userRepository.saveUser(user);
+
 
         emailTokenService.createEmailToken(userRepository.findNumberByEmail(user.getEmail()), user.getEmail());
 
@@ -87,8 +92,23 @@ public class UserServiceImpl implements UserService {
         //유저 리포지토리 필요
         User findUser = userRepository.findUserByEmail(email).get();
 
+        //나중에 없는 사용자라고 넣어도 될듯?
         //이메일 전송 서비스
+        SimpleMailMessage mailMessage = new SimpleMailMessage();
 
+        try{
+            mailMessage.setTo(email);
+            mailMessage.setSubject("회원님의 Id");
+            mailMessage.setText("" +
+                    "회원님의 아이디는 다음과 같습니다."+
+                    "<br/>" +
+                    findUser.getId() +
+                    "<br/>");
+            emailSenderService.sendEmail(mailMessage);
+        } catch (Exception e){
+            log.info("Exception = {}",e);
+
+        }
 
         return findUser.getId();
     }

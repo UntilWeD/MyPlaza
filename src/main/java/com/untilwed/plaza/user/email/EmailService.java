@@ -4,6 +4,7 @@ import com.untilwed.plaza.user.User;
 import com.untilwed.plaza.user.service.UserServiceImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -37,8 +38,10 @@ public class EmailService {
             log.info("유저가 존재합니다. 유저 : {}", findUser.get());
             return true;
         }
-        log.info("해당유저는 데이터베이스에 존재하지 않습닌다.");
+        log.info("해당유저는 데이터베이스에 존재하지 않습니다.");
         return false;
     }
+
+
 
 }

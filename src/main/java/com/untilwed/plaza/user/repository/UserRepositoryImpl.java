@@ -93,7 +93,7 @@ public class UserRepositoryImpl implements UserRepository{
     public long findNumberByEmail(String email) {
         log.info("[유저리포지토리]findNumberByEmail메서드를 실행하였습니다. ");
         String sql = "SELECT number FROM user WHERE email = ?";
-        Long userNumber = jdbcTemplate. queryForObject(sql, Long.class, email);
+        Long userNumber = jdbcTemplate.queryForObject(sql, Long.class, email);
 
         return userNumber;
     }
