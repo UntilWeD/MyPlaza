@@ -100,10 +100,10 @@ public class UserServiceImpl implements UserService {
             mailMessage.setTo(email);
             mailMessage.setSubject("회원님의 Id");
             mailMessage.setText("" +
-                    "회원님의 아이디는 다음과 같습니다."+
-                    "<br/>" +
-                    findUser.getId() +
-                    "<br/>");
+                    "회원님의 아이디는 다음과 같습니다. \n" +
+                    "\n" +
+                    findUser.getId()
+                    );
             emailSenderService.sendEmail(mailMessage);
         } catch (Exception e){
             log.info("Exception = {}",e);

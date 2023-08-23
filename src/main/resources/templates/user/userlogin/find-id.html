@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en"
-      xmlns:th="http://thymeleaf.org">
+      xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>find-id</title>
@@ -8,10 +8,15 @@
 <body>
     <h1>아이디 찾기</h1>
     <p>계정의 아이디를 찾기위해 이메일을 입력해주세요</p>
-    <form   th:action="@{/userlogin/find-id}" method="post">
+    <form   th:action="@{/userlogin/find-id}" method="post" th:object="${userFindForm}">
+
+        <div th:if="${#fields.hasGlobalErrors()}">
+            <p th:each="err:${#fields.globalErrors()}"
+               th:utext="${err}">글로벌 오류 메시지</p>
+        </div>
 
         <label for="email">Email :
-            <input type="text" id="email" name="email">
+            <input type="text" id="email" name="email" th:field="*{email}">
         </label>
 
         <button type="submit">전송하기</button>

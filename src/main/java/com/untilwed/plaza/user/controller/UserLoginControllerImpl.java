@@ -2,6 +2,7 @@ package com.untilwed.plaza.user.controller;
 
 import com.untilwed.plaza.user.LoginForm;
 import com.untilwed.plaza.user.User;
+import com.untilwed.plaza.user.UserFindForm;
 import com.untilwed.plaza.user.service.UserServiceImpl;
 import com.untilwed.plaza.user.validation.UserValidator;
 import com.untilwed.plaza.web.SessionConst;
@@ -13,6 +14,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -105,14 +107,24 @@ public class UserLoginControllerImpl implements UserLoginController {
 
     //아이디찾기
     @GetMapping("/find-id")
-    public String findIdByEmailHome(){
+    public String findIdByEmailHome(@ModelAttribute("userFindForm")UserFindForm userFindForm){
+        log.info("[findIdByEmailHome] 메서드 실행");
         return "/user/userlogin/find-id";
     }
 
     //아이디찾기
     @PostMapping("/find-id")
-    public String findIdByEmail(@RequestParam("email") String email, Model model){
-        log.info("[로그인컨트롤러] 사용자로 부터 받아온 email입니다. email: {}", email);
+    public String findIdByEmail(@ModelAttribute("userFindForm")UserFindForm userFindForm, BindingResult bindingResult, Model model){
+        log.info("[로그인컨트롤러] 사용자로 부터 받아온 email입니다. email: {}", userFindForm);
+
+        String email = userFindForm.getEmail();
+
+        if(email.equals("") || !(email.contains("@")) || !(email.contains(".com")) ){
+
+            bindingResult.reject("find-id");
+            return "/user/userlogin/find-id";
+        }
+
         userService.findUserIdByEmail(email);
 
         model.addAttribute("email", email);
