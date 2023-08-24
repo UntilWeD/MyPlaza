@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>Plaza User Information</h1>
+
+<form th:action th:object="${user}" method="post">
+  <div th:if="${#fields.hasGlobalErrors()}">
+    <p th:each="err:${#fields.globalErrors()}"
+       th:text="${err}">글로벌 오류 메시지</p>
+  </div>
+
+  <label for="username">Username:</label>
+  <input type="text" id="username" th:field="*{username}"
+         placeholder="유저이름을 입력해주세요.">
+  <div th:errors="*{username}">
+    유저 이름 오류
+  </div>
+  <br><br>
+
+  <label for="id">Id:</label>
+  <input type="text" id="id" th:field="*{id}"
+         placeholder="Id를 입력해주세요.">
+  <div th:errors="*{id}">
+    유저 Id 오류
+  </div>
+  <br><br>
+
+  <label for="password">Password:</label>
+  <input type="password" id="password" th:field="*{password}"
+         placeholder="비밀번호를 입력해주세요.">
+  <div th:errors="*{password}">
+    유저 비밀번호 오류
+  </div>
+  <br><br>
+
+  <label for="email">Email:</label>
+  <input type="text" id="email" th:field="*{email}"
+         placeholder="이메일을 입력해주세요.">
+  <div th:errors="*{email}">
+    유저 이메일 오류
+  </div>
+  <br><br>
+
+  <button type="submit">정보 수정</button>
+
+</body>
+</html>
