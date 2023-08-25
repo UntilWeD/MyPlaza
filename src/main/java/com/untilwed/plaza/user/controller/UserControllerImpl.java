@@ -52,7 +52,7 @@ public class UserControllerImpl implements UserController{
             return "/home";
         }
 
-        return "/user/change-user";
+        return "/user/change-userform";
     }
 
     /**
@@ -69,8 +69,11 @@ public class UserControllerImpl implements UserController{
 
         if(bindingResult.hasErrors()){
             log.info("회원가입 중 오류가 발생하여 다시 되돌아갑니다 : {}", bindingResult);
-            return "user/userlogin/register";
+            return "user/change-userform";
         }
+
+
+
 
         return "/user/change-user";
     }

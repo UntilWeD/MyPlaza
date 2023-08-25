@@ -6,13 +6,17 @@
     <link th:href="@{/css/bootstrap.css}" rel="stylesheet">
     <title>Index</title>
 </head>
-
 <body>
     <h1>Welcome To PLAZA!</h1>
     <img th:src="@{/img/Ancient_plaza.jpg}" alt="고대 플라자 사진"/>
 
     <h3 class="mb-3" th:text="|로그인: ${user.username}|"></h3>
     </div>
+
+    <a th:href="@{/user/change-user}">
+        <img th:src="@{/img/user-icon.png}" width="50" height="50" >
+    </a>
+
     <div class="col">
         <form th:action="@{/userlogin/logout}" method="post">
             <button class="w-100 btn btn-dark btn-lg" type="submit">

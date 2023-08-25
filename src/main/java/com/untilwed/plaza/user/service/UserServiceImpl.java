@@ -85,6 +85,14 @@ public class UserServiceImpl implements UserService {
         return findUser;
     }
 
+    // 유저의 유저정보변경
+    @Override
+    public User changeUser(User user) {
+
+
+        return null;
+    }
+
     @Override
     public String findUserIdByEmail(String email) {
         log.info("[유저서비스]findUserIdByEmail 메서드를 실행중입니다.");

@@ -16,7 +16,7 @@
 
         <label for="username">Username:</label>
         <input type="text" id="username" th:field="*{username}"
-               placeholder="유저이름을 입력해주세요.">
+               placeholder="유저이름을 입력해주세요." disabled>
         <div th:errors="*{username}">
             유저 이름 오류
         </div>
@@ -24,7 +24,7 @@
 
         <label for="id">Id:</label>
         <input type="text" id="id" th:field="*{id}"
-               placeholder="Id를 입력해주세요.">
+               placeholder="Id를 입력해주세요." disabled>
         <div th:errors="*{id}">
             유저 Id 오류
         </div>
@@ -32,7 +32,7 @@
 
         <label for="password">Password:</label>
         <input type="password" id="password" th:field="*{password}"
-               placeholder="비밀번호를 입력해주세요.">
+               placeholder="비밀번호를 입력해주세요." disabled>
         <div th:errors="*{password}">
             유저 비밀번호 오류
         </div>
@@ -40,11 +40,20 @@
 
         <label for="email">Email:</label>
         <input type="text" id="email" th:field="*{email}"
-               placeholder="이메일을 입력해주세요.">
+               placeholder="이메일을 입력해주세요." disabled>
         <div th:errors="*{email}">
             유저 이메일 오류
         </div>
         <br><br>
+
+        <button th:onclick="|location.href='@{/user/change-userform}'|"
+                type="button">
+            수정하기
+        </button>
+        <button th:onclick="|location.href='@{/}'|"
+                type="button">
+            홈으로 가기
+        </button>
 
     </form>
 </body>
