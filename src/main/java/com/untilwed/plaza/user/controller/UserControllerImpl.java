@@ -1,6 +1,7 @@
 package com.untilwed.plaza.user.controller;
 
 import com.untilwed.plaza.user.User;
+import com.untilwed.plaza.user.service.UserServiceImpl;
 import com.untilwed.plaza.user.validation.UserValidator;
 import com.untilwed.plaza.web.SessionConst;
 import jakarta.servlet.http.HttpServletRequest;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 public class UserControllerImpl implements UserController{
 
     private final UserValidator userValidator;
+    private final UserServiceImpl userService;
 
     @GetMapping("/change-user")
     @Override
@@ -62,7 +64,7 @@ public class UserControllerImpl implements UserController{
      */
     @PostMapping("/change-userform")
     @Override
-    public String changeUserForm(@ModelAttribute User user, BindingResult bindingResult, HttpServletRequest request) {
+    public String changeUserForm(@ModelAttribute User user, BindingResult bindingResult, HttpServletRequest request, Model model) {
 
         // 사용자의 요구에 따라 Validator를 UserChangeValidator로 따로 바꿔서 기능을 다르게 설정할 수 있다.
         userValidator.validate(user, bindingResult);
@@ -72,6 +74,17 @@ public class UserControllerImpl implements UserController{
             return "user/change-userform";
         }
 
+        HttpSession session = request.getSession(false);
+        User loginUser = (User) session.getAttribute(SessionConst.LOGIN_USER);
+
+        User chanedUser = userService.changeUser(user, loginUser.getNumber());
+        model.addAttribute("user",chanedUser);
+
+        // 기존의 세션 삭제 후
+        session.invalidate();
+        // 새로운 유저정보로 세션 업데이트
+        session = request.getSession(true);
+        session.setAttribute(SessionConst.LOGIN_USER, chanedUser);
 
 
 

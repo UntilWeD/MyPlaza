@@ -16,7 +16,7 @@ public interface UserService {
     public String findUserIdByEmail(String email);
 
     //유저 정보 변경
-    public User changeUser(User user);
+    public User changeUser(User user, Long userNumber);
 
     //TODO: 이메일 비밀번호찾기는 회원정보수정을 만든후에 하도록 하자 (URL을 비밀번호변경으로 보내기)
 }

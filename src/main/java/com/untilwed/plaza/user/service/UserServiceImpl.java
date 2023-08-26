@@ -27,15 +27,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User register(User user) {
-        log.info("serviceUser = {}", user);
-
-        log.info("[유저서비스]이메일을 전송하였습니다.");
+        log.info("[유저서비스]register user = {}", user);
 
         User savedUser = userRepository.saveUser(user);
-
-
         emailTokenService.createEmailToken(userRepository.findNumberByEmail(user.getEmail()), user.getEmail());
-
 
         return savedUser;
     }
@@ -63,7 +58,7 @@ public class UserServiceImpl implements UserService {
             }
 
         } else {
-          log.info("로그인에 실패하셨습니다. 아이디나 비밀번호를 다시 확인해주세요.");
+          log.info("[유저서비스]로그인에 실패하셨습니다. 아이디나 비밀번호를 다시 확인해주세요.");
           return null;
         }
     }
@@ -75,7 +70,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Optional<User> setEmailVerify(Long userNumber) {
-        log.info("UserServiceImpl의 setEmailVerify메서드를 실행하겠습니다.");
+        log.info("[유저서비스]UserServiceImpl의 setEmailVerify메서드를 실행하겠습니다.");
         Optional<User> findUser = userRepository.setEmailVerifiedByNumber(userNumber);
 
         if(findUser.isEmpty()){
@@ -87,10 +82,12 @@ public class UserServiceImpl implements UserService {
 
     // 유저의 유저정보변경
     @Override
-    public User changeUser(User user) {
+    public User changeUser(User user, Long userNumber) {
+        log.info("[유저서비스]정보변경메서드를 실행합니다.");
+        User updatedUser = userRepository.updateUser(user, userNumber);
 
 
-        return null;
+        return updatedUser;
     }
 
     @Override

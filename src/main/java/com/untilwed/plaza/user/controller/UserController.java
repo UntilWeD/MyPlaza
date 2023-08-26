@@ -10,5 +10,5 @@ import org.springframework.web.bind.annotation.RequestParam;
 public interface UserController {
     public String changeUserHome(HttpServletRequest request, Model model);
     public String changeUserFormHome(HttpServletRequest request, Model model);
-    public String changeUserForm(@ModelAttribute User user, BindingResult bindingResult, HttpServletRequest request);
+    public String changeUserForm(@ModelAttribute User user, BindingResult bindingResult, HttpServletRequest request, Model model);
 }

@@ -38,14 +38,33 @@ public class UserRepositoryImpl implements UserRepository{
     }
 
     @Override
+    public User updateUser(User user, Long userNumber) {
+        log.info("[유저리포지토리] 유저업데이트메서드를 실행합니다.");
+        log.info("[유저리포지토리] user = {}, userNumber = {}", user, userNumber);
+        String sql = "UPDATE user SET id = ?, password = ?, email = ?, username = ? WHERE number = ?";
+        jdbcTemplate.update(
+                sql,
+                user.getId(),
+                user.getPassword(),
+                user.getEmail(),
+                user.getUsername(),
+                userNumber
+        );
+
+        User updatedUser = findByIdUser(user.getId()).get();
+
+        return updatedUser;
+    }
+
+    @Override
     public Optional<User> findUser(User user) {
         return Optional.empty();
     }
 
     @Override
     public Optional<User> findByIdUser(String id) {
-
         String sql = "SELECT * FROM user WHERE id = ?";
+
         Optional<User> findUser = null;
 
         try{
@@ -97,6 +116,7 @@ public class UserRepositoryImpl implements UserRepository{
 
         return userNumber;
     }
+
 
     @Override
     public Optional<User> findUserByEmail(String email) {
