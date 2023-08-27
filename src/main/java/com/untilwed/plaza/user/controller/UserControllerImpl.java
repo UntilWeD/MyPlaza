@@ -1,11 +1,13 @@
 package com.untilwed.plaza.user.controller;
 
+import com.untilwed.plaza.user.DeleteUserForm;
 import com.untilwed.plaza.user.User;
 import com.untilwed.plaza.user.service.UserServiceImpl;
 import com.untilwed.plaza.user.validation.UserValidator;
 import com.untilwed.plaza.web.SessionConst;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -22,6 +24,12 @@ public class UserControllerImpl implements UserController{
     private final UserValidator userValidator;
     private final UserServiceImpl userService;
 
+    /**
+     * 유저 홈 메서드
+     * @param request
+     * @param model
+     * @return /user/change-user (html)
+     */
     @GetMapping("/change-user")
     @Override
     public String changeUserHome(HttpServletRequest request, Model model) {
@@ -74,6 +82,7 @@ public class UserControllerImpl implements UserController{
             return "user/change-userform";
         }
 
+        // 하드 코딩 나중에 다른방법을 생각해보자
         HttpSession session = request.getSession(false);
         User loginUser = (User) session.getAttribute(SessionConst.LOGIN_USER);
 
@@ -89,5 +98,37 @@ public class UserControllerImpl implements UserController{
 
 
         return "/user/change-user";
+    }
+
+    @GetMapping("/delete-userform")
+    @Override
+    public String deleteUserFormHome(@ModelAttribute("deleteUserForm") DeleteUserForm deleteUserForm) {
+        log.info("[유저컨트롤러] deleteUserFormHome 메서드가 실행되었습니다.");
+        return "/user/delete-userform";
+    }
+
+    @PostMapping("/delete-userform")
+    @Override
+    public String deleteUserForm(@Valid @ModelAttribute("deleteUserForm") DeleteUserForm deleteUserForm, BindingResult bindingResult, HttpServletRequest request, Model model) {
+        HttpSession session = request.getSession(false);
+        User loginUser = (User) session.getAttribute(SessionConst.LOGIN_USER);
+
+        log.info("loginUser.getPassword = {}, deleteUserForm.getPassword = {}", loginUser.getPassword(), deleteUserForm.getPassword());
+
+        if(!(loginUser.getPassword().equals(deleteUserForm.getPassword()))){
+            bindingResult.reject("wrong-password");
+        }
+
+        if(bindingResult.hasErrors()){
+            log.info("deleteUser 과정 중 에러 발생 및 전송");
+            return "/user/delete-userform";
+        }
+
+        User deleteUser = userService.deleteUser(loginUser);
+
+        model.addAttribute("user", deleteUser);
+        session.invalidate();
+
+        return "/user/delete-user";
     }
 }

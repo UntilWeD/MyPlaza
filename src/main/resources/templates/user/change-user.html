@@ -46,6 +46,11 @@
         </div>
         <br><br>
 
+
+        <button th:onclick="|location.href='@{/user/delete-userform}'|"
+                type="button">
+            탈퇴하기
+        </button>
         <button th:onclick="|location.href='@{/user/change-userform}'|"
                 type="button">
             수정하기

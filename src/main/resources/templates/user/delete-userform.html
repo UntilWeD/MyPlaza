@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>delete-user</title>
+</head>
+<body>
+    <p>정말로 삭제하시겠습니까?</p>
+    <br/>
+    <form th:action th:object="${deleteUserForm}" method="post">
+        <label for="password">Password :</label>
+        <input type="password" id="password" th:field="*{password}"
+                placeholder="비밀번호를 입력해주세요.">
+        <div th:errors="*{password}"/>
+        <br/>
+
+        <button type="submit">탈퇴하기</button>
+    </form>
+
+</body>
+</html>

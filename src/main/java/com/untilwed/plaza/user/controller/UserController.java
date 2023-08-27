@@ -1,5 +1,6 @@
 package com.untilwed.plaza.user.controller;
 
+import com.untilwed.plaza.user.DeleteUserForm;
 import com.untilwed.plaza.user.User;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.ui.Model;
@@ -11,4 +12,6 @@ public interface UserController {
     public String changeUserHome(HttpServletRequest request, Model model);
     public String changeUserFormHome(HttpServletRequest request, Model model);
     public String changeUserForm(@ModelAttribute User user, BindingResult bindingResult, HttpServletRequest request, Model model);
+    public String deleteUserFormHome(@ModelAttribute DeleteUserForm deleteUserForm);
+    public String deleteUserForm(@ModelAttribute DeleteUserForm deleteUserForm, BindingResult bindingResult, HttpServletRequest request,Model model);
 }

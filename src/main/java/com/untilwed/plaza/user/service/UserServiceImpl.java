@@ -1,5 +1,6 @@
 package com.untilwed.plaza.user.service;
 
+import com.untilwed.plaza.user.DeleteUserForm;
 import com.untilwed.plaza.user.LoginForm;
 import com.untilwed.plaza.user.User;
 import com.untilwed.plaza.user.email.EmailSenderService;
@@ -80,10 +81,17 @@ public class UserServiceImpl implements UserService {
         return findUser;
     }
 
+    @Override
+    public User deleteUser(User user) {
+        log.info("[유저서비스]deleteUser를 실행합니다.");
+
+        return userRepository.deleteUser(user);
+    }
+
     // 유저의 유저정보변경
     @Override
     public User changeUser(User user, Long userNumber) {
-        log.info("[유저서비스]정보변경메서드를 실행합니다.");
+        log.info("[유저서비스]changeUser를 실행합니다.");
         User updatedUser = userRepository.updateUser(user, userNumber);
 
 

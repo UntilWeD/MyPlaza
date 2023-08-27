@@ -1,5 +1,6 @@
 package com.untilwed.plaza.user.service;
 
+import com.untilwed.plaza.user.DeleteUserForm;
 import com.untilwed.plaza.user.LoginForm;
 import com.untilwed.plaza.user.User;
 
@@ -17,6 +18,9 @@ public interface UserService {
 
     //유저 정보 변경
     public User changeUser(User user, Long userNumber);
+
+    //유저 삭제
+    public User deleteUser(User user);
 
     //TODO: 이메일 비밀번호찾기는 회원정보수정을 만든후에 하도록 하자 (URL을 비밀번호변경으로 보내기)
 }

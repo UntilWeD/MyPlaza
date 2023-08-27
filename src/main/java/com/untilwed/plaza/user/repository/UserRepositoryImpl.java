@@ -57,6 +57,16 @@ public class UserRepositoryImpl implements UserRepository{
     }
 
     @Override
+    public User deleteUser(User user) {
+        String sql = "DELETE FROM user WHERE number = ?";
+
+        jdbcTemplate.update(sql, user.getNumber());
+
+        return user;
+    }
+
+
+    @Override
     public Optional<User> findUser(User user) {
         return Optional.empty();
     }
@@ -79,11 +89,6 @@ public class UserRepositoryImpl implements UserRepository{
     @Override
     public List<User> findAllUser() {
         return null;
-    }
-
-    @Override
-    public Optional<User> deleteUser(User user) {
-        return Optional.empty();
     }
 
     //이메일 성공 로직
