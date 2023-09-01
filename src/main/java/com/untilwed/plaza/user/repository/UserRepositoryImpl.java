@@ -66,6 +66,7 @@ public class UserRepositoryImpl implements UserRepository{
     }
 
 
+
     @Override
     public Optional<User> findUser(User user) {
         return Optional.empty();
@@ -133,7 +134,23 @@ public class UserRepositoryImpl implements UserRepository{
             findUser = Optional.of(jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<>(User.class), email));
             return findUser;
         } catch (Exception ex){
-            log.info("[유저리포지토리] findUser를 찾는 도중 오류가 발생하였습니다.");
+            log.info("[유저리포지토리] findUser를 찾는 도중 에러가 발생하였습니다.");
+        }
+
+        return Optional.empty();
+    }
+
+    @Override
+    public Optional<User> findUserByEmailAndId(String email, String id) {
+        String sql = "SELECT * FROM user WHERE email = ?, id=?";
+
+        Optional<User> findUser = null;
+
+        try{
+            findUser = Optional.of(jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<>(User.class), email, id));
+            return findUser;
+        } catch (Exception ex){
+            log.info("findUserByEmailAndId로 찾는 도중 에러가 발생하였습니다.");
         }
 
         return Optional.empty();

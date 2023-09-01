@@ -8,7 +8,7 @@
 <body>
     <h1>아이디 찾기</h1>
     <p>계정의 아이디를 찾기위해 이메일을 입력해주세요</p>
-    <form   th:action="@{/userlogin/find-id}" method="post" th:object="${userFindForm}">
+    <form   th:action="@{/userlogin/find-id}" method="post" th:object="${userFindIdForm}">
 
         <div th:if="${#fields.hasGlobalErrors()}">
             <p th:each="err:${#fields.globalErrors()}"

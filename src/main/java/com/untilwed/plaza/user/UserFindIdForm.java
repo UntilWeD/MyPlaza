@@ -4,9 +4,8 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 @Data
-public class UserFindForm {
+public class UserFindIdForm {
     @NotNull
     String email;
 
-    String id;
 }

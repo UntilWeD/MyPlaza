@@ -2,7 +2,8 @@ package com.untilwed.plaza.user.controller;
 
 import com.untilwed.plaza.user.LoginForm;
 import com.untilwed.plaza.user.User;
-import com.untilwed.plaza.user.UserFindForm;
+import com.untilwed.plaza.user.UserFindIdForm;
+import com.untilwed.plaza.user.UserFindPwForm;
 import com.untilwed.plaza.user.service.UserServiceImpl;
 import com.untilwed.plaza.user.validation.UserValidator;
 import com.untilwed.plaza.web.SessionConst;
@@ -10,11 +11,9 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.ObjectError;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -107,17 +106,17 @@ public class UserLoginControllerImpl implements UserLoginController {
 
     //아이디찾기
     @GetMapping("/find-id")
-    public String findIdByEmailHome(@ModelAttribute("userFindForm")UserFindForm userFindForm){
+    public String findIdByEmailHome(@ModelAttribute("userFindForm") UserFindIdForm userFindIdForm){
         log.info("[findIdByEmailHome] 메서드 실행");
         return "/user/userlogin/find-id";
     }
 
     //아이디찾기
     @PostMapping("/find-id")
-    public String findIdByEmail(@ModelAttribute("userFindForm")UserFindForm userFindForm, BindingResult bindingResult, Model model){
-        log.info("[로그인컨트롤러] 사용자로 부터 받아온 email입니다. email: {}", userFindForm);
+    public String findIdByEmail(@ModelAttribute("userFindForm") UserFindIdForm userFindIdForm, BindingResult bindingResult, Model model){
+        log.info("사용자로 부터 받아온 email입니다. email: {}", userFindIdForm);
 
-        String email = userFindForm.getEmail();
+        String email = userFindIdForm.getEmail();
 
         if(email.equals("") || !(email.contains("@")) || !(email.contains(".com")) ){
 
@@ -132,6 +131,24 @@ public class UserLoginControllerImpl implements UserLoginController {
     }
 
     //비밀번호찾기
+    @GetMapping("/find-password")
+    public String findPwByPwFindFormHome(@ModelAttribute("pwForm") UserFindPwForm pwForm){
+        return "/user/userlogin/find-pw";
+    }
+
+    @PostMapping("/find-password")
+    public String findPwByPwFindForm(@ModelAttribute("pwForm") UserFindPwForm pwForm, BindingResult bindingResult, Model model){
+        log.info("findPwByPwFindForm 메서드가 실행되고 있습니다.");
+
+        if(bindingResult.hasErrors()){
+            log.info("findPwByPwFindForm메서드 실행중 오류 발생");
+            return "/user/userlogin/find-pw";
+        }
+
+        model.addAttribute("email", pwForm.getEmail());
+        return "/user/userlogin/find-pw-finished";
+    }
+
 
 }
 

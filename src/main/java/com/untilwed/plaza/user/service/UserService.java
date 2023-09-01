@@ -3,6 +3,7 @@ package com.untilwed.plaza.user.service;
 import com.untilwed.plaza.user.DeleteUserForm;
 import com.untilwed.plaza.user.LoginForm;
 import com.untilwed.plaza.user.User;
+import com.untilwed.plaza.user.UserFindPwForm;
 
 import javax.swing.text.html.Option;
 import java.util.Optional;
@@ -15,6 +16,7 @@ public interface UserService {
 
     public Optional<User> setEmailVerify(Long userNumber);
     public String findUserIdByEmail(String email);
+    public void findUserPwByIdAndEmail(UserFindPwForm pwForm);
 
     //유저 정보 변경
     public User changeUser(User user, Long userNumber);

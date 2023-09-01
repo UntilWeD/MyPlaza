@@ -20,6 +20,7 @@ public interface UserRepository {
     public List<User> findAllUser();
     public long findNumberByEmail(String email);
     public Optional<User> findUserByEmail(String email);
+    public Optional<User> findUserByEmailAndId(String email, String id);
 
     //다른기능
     public Optional<User> setEmailVerifiedByNumber(Long userNumber);

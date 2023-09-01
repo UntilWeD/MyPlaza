@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>find-pw</title>
+</head>
+<body>
+  <h1>비밀번호 찾기</h1>
+  <p>계정의 비밀번호를 찾기위해 이메일과 아이디를 입력해주세요</p>
+  <form th:action method="post" th:object="${pwForm}">
+    <label for="email">Email:
+        <input type="email" id="email"  name="email" th:field="*{email}">
+    </label>
+      <div th:errors="*{email}">
+          이메일 오류
+      </div>
+      <br/>
+
+    <label for="id">Id:
+        <input type="text" id="id"  name="id" th:field="*{id}">
+    </label>
+      <div th:errors="*{id}">
+          아이디 오류
+      </div>
+
+      <button type="submit">전송하기</button>
+
+  </form>
+</body>
+</html>
