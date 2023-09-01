@@ -142,12 +142,12 @@ public class UserServiceImpl implements UserService {
             mailMessage.setText("" +
                     "회원님의 아이디는 다음과 같습니다. \n" +
                     "\n" +
-                    findUser.getId()
+                    findUser.getPassword()
             );
+            emailSenderService.sendEmail(mailMessage);
         }catch (Exception e){
             log.info("Exception={}", e);
         }
 
-        return null;
     }
 }

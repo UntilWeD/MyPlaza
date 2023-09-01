@@ -140,6 +140,8 @@ public class UserLoginControllerImpl implements UserLoginController {
     public String findPwByPwFindForm(@ModelAttribute("pwForm") UserFindPwForm pwForm, BindingResult bindingResult, Model model){
         log.info("findPwByPwFindForm 메서드가 실행되고 있습니다.");
 
+        userService.findUserPwByIdAndEmail(pwForm);
+
         if(bindingResult.hasErrors()){
             log.info("findPwByPwFindForm메서드 실행중 오류 발생");
             return "/user/userlogin/find-pw";

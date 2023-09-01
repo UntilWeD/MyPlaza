@@ -142,7 +142,9 @@ public class UserRepositoryImpl implements UserRepository{
 
     @Override
     public Optional<User> findUserByEmailAndId(String email, String id) {
-        String sql = "SELECT * FROM user WHERE email = ?, id=?";
+        log.info("findUserByEmailAndId메서드가 실행되었습니다. ");
+
+        String sql = "SELECT * FROM user WHERE email = ? AND id=?";
 
         Optional<User> findUser = null;
 
